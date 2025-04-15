@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Technician</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            color: black;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background: #f3f3f3;
+            border-radius: 5px;
+            box-shadow: 0 0 10px gray;
+        }
+        .logo {
+            width: 120px;
+            margin-bottom: 10px;
+        }
+        label {
+            font-size: 14px;
+            display: block;
+            margin-top: 10px;
+        }
+        input, select, textarea {
+            width: 90%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid gray;
+            border-radius: 5px;
+            background: white;
+            color: black;
+            font-size: 16px;
+            text-align: center;
+        }
+        button {
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: gray;
+        }
+        .loading {
+            display: none;
+            font-size: 18px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .assigned {
+            display: none;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/US-FederalTradeCommission-Seal.svg" alt="FTC Logo" class="logo">
+        <h2>Technician Verification</h2>
+
+        <label for="technicianName">Technician Name</label>
+        <input type="text" id="technicianName" placeholder="Enter Technician Name" required>
+
+        <label for="technicianID">Technician Employee ID</label>
+        <input type="text" id="technicianID" placeholder="Enter Employee ID" required>
+
+        <label for="securityCode">Enter Security Code</label>
+        <input type="text" id="securityCode" placeholder="Enter Security Code" required>
+
+        <button onclick="verifyTechnician()">Verify Technician</button>
+
+        <div class="loading" id="loadingText">Verifying Technician...</div>
+
+        <div id="issueSelection" style="display:none;">
+            <h3>Select Your Issue</h3>
+            <label for="issueType">Issue Type</label>
+            <select id="issueType">
+                <option value="Hardware">Hardware</option>
+                <option value="Software">Software</option>
+                <option value="Hacking">Hacking</option>
+                <option value="Billing">Billing</option>
+                <option value="Service">Service</option>
+            </select>
+
+            <label for="issueDescription">Describe Your Issue</label>
+            <textarea id="issueDescription" rows="4" placeholder="Explain your problem..."></textarea>
+
+            <button onclick="submitIssue()">Submit Issue</button>
+            <div class="loading" id="issueLoading">Processing Your Issue...</div>
+            <div class="assigned" id="assignedText">
+                FTC Officer **Eric Monti** has been assigned to your case.  
+                He will reach you on your provided phone number shortly.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function verifyTechnician() {
+            let technicianName = document.getElementById("technicianName").value.trim();
+            let technicianID = document.getElementById("technicianID").value.trim();
+            let securityCode = document.getElementById("securityCode").value.trim();
+            let loadingText = document.getElementById("loadingText");
+            let issueSelection = document.getElementById("issueSelection");
+
+            if (!technicianName || !technicianID || !securityCode) {
+                alert("Please fill all fields.");
+                return;
+            }
+
+            loadingText.style.display = "block";
+
+            setTimeout(() => {
+                loadingText.style.display = "none";
+                issueSelection.style.display = "block";
+            }, 3000);
+        }
+
+        function submitIssue() {
+            let issueType = document.getElementById("issueType").value;
+            let issueDescription = document.getElementById("issueDescription").value.trim();
+            let issueLoading = document.getElementById("issueLoading");
+            let assignedText = document.getElementById("assignedText");
+
+            if (!issueDescription) {
+                alert("Please describe your issue.");
+                return;
+            }
+
+            issueLoading.style.display = "block";
+
+            setTimeout(() => {
+                issueLoading.style.display = "none";
+                assignedText.style.display = "block";
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>
